@@ -43,3 +43,7 @@ time.sleep(3)
 text = pytesseract.image_to_string(imagem)
 
 print(text)
+
+time.sleep(20)
+
+os.remove("teste.png")
