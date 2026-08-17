@@ -4,6 +4,9 @@ import subprocess
 import pyautogui
 import pyscreeze
 import platform
+import pytesseract
+
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 numero = "5561993299082"
 
@@ -17,16 +20,26 @@ elif sistema == "Linux":
 
 time.sleep(2)
 
-pyautogui.click(800, 1000)
+pyautogui.click(1000, 1000)
 
 time.sleep(2)
 
-pyautogui.write("linda")
+pyautogui.write("")
 
-time.sleep(6)
+time.sleep(2)
 
-imagem = pyautogui.screenshot()
+pyautogui.press("enter")
+
+time.sleep(2)
+
+imagem = pyautogui.screenshot(region=(700, 800, 976, 1818))
+
+time.sleep(1)
 
 imagem.save("teste.png")
 
-pyautogui.press("enter")
+time.sleep(3)
+
+text = pytesseract.image_to_string(imagem)
+
+print(text)
