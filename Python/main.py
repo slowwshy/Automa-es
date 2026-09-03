@@ -4,68 +4,54 @@ import subprocess
 import pyautogui
 import pyscreeze
 import platform
-import pytesseract
+import easyocr
 import re
+def main(texto):
+    numero = "5561996759176"
 
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+    sistema = platform.system()
 
-numero = "5561993299082"
+    if sistema == "Windows":
+            subprocess.Popen(["start", f"whatsapp://send?phone={numero}"], shell=True)
 
-sistema = platform.system()
+    elif sistema == "Linux":
+            subprocess.Popen(["xdg-open", f"whatsapp://send?phone={numero}"])
 
-if sistema == "Windows":
-    subprocess.Popen(["start", f"whatsapp://send?phone={numero}"], shell=True)
+    time.sleep(2)
 
-elif sistema == "Linux":
-    subprocess.Popen(["xdg-open", f"whatsapp://send?phone={numero}"])
+    pyautogui.click(1000, 1000)
 
-time.sleep(2)
+    time.sleep(2)
 
-pyautogui.click(1000, 1000)
+    pyautogui.write("hello")
 
-time.sleep(2)
+    time.sleep(2)
 
-pyautogui.write("")
+    pyautogui.press("enter")
 
-time.sleep(2)
+    time.sleep(2)
 
-pyautogui.press("enter")
+    imagem = pyautogui.screenshot(region=(450, 50, 1470, 976))
 
-time.sleep(2)
+    time.sleep(1)
 
-imagem = pyautogui.screenshot(region=(80, 50, 1900, 976))
+    imagem.save("teste.png")
 
-imagem = imagem.convert("L")
-
-imagem = imagem.point(
-    lambda p: 255 if p > 180 else 0
-)
-
-time.sleep(1)
-
-imagem.save("teste.png")
+    time.sleep(3)
 
 
+    reader = easyocr.Reader(['pt'])
 
-time.sleep(3)
 
-text = pytesseract.image_to_string(
-    imagem, 
-    lang= "por", 
-    config= '-c tessedit_char_whitelist"=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789áàâããéêíóôõúçÁÀÂÃÉÊÍÓÔÕÚÇ?!.,:;()-"--psm 7'
-)
+    resultado = reader.readtext('teste.png')
 
-text = re.sub( r"[^a-zA-ZÀ-ÿ0-9?!., ]", "", text)
+    for coordenadas, texto, confianca in resultado:
+            with open("arquivo.txt", "a") as arquivo:
+                arquivo.write(texto + "\n")
 
-mensagens = re.findall(
-    r"(.*?)\s\d{2}:\d{2}",
-    text
-)
+    time.sleep(40)
 
-print(text)
+    os.remove("arquivo.txt")
+    os.remove("teste.png")
 
-print(mensagens)
-
-time.sleep(20)
-
-os.remove("teste.png")
+   
