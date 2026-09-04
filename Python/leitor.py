@@ -32,6 +32,7 @@ with sync_playwright() as p:
             if len(texto) > 1:
                     time.sleep(1)
                     print("🔔 TEM MENSAGEM NÃO LIDA!")
+                    main.main(texto)
             else:
                 time.sleep(1)
                 print("Nenhuma mensagem não lida.")
