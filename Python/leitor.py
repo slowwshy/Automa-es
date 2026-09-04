@@ -8,7 +8,6 @@ import easyocr
 import re
 import main
 import numpy as np
-from pywinauto import Desktop
 from playwright.sync_api import sync_playwright
 
 with sync_playwright() as p:
