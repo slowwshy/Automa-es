@@ -6,8 +6,12 @@ import pyscreeze
 import platform
 import easyocr
 import re
+from leitor import pagina, navegador
 
 
 def main(texto):
-        print("txt")
-   
+        conversa_nao_lida = pagina.locator(
+    '[data-testid="cell-frame-container"]').filter(
+        has = pagina.locator('[data-testid="icon-unread-count"]')
+)
+        conversa_nao_lida.first.click()

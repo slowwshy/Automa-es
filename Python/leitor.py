@@ -37,8 +37,9 @@ with sync_playwright() as p:
                 time.sleep(1)
                 print("Nenhuma mensagem não lida.")
 
-        except:
-            pass
+        except Exception as erro:
+            exit()
+
 
 
     
