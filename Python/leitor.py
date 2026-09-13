@@ -10,36 +10,37 @@ import main
 import numpy as np
 from playwright.sync_api import sync_playwright
 
-with sync_playwright() as p:
+def leitor(button):
+    with sync_playwright() as p:
 
-    navegador = p.chromium.launch(
-        headless=False,
-        args=["--start-maximized"]
-    )
+        navegador = p.chromium.launch(
+            headless=False,
+            args=["--start-maximized"]
+        )
 
-    pagina = navegador.new_page(no_viewport=True)
+        pagina = navegador.new_page(no_viewport=True)
 
-    pagina.goto("https://web.whatsapp.com")
+        pagina.goto("https://web.whatsapp.com")
 
-    input("Entre no WhatsApp e abra a conversa. Pressione ENTER...")
+        input("Entre no WhatsApp e abra a conversa. Pressione ENTER...")
 
-    while True:
-        try:
-            elemento = pagina.locator("#unread-filter")
+        while True:
+            try:
+                elemento = pagina.locator("#unread-filter")
 
-            texto = elemento.inner_text().strip().splitlines()
+                texto = elemento.inner_text().strip().splitlines()
 
-            if len(texto) > 1:
+                if len(texto) > 1:
+                        time.sleep(1)
+                        print("🔔 TEM MENSAGEM NÃO LIDA!")
+                        main.main(texto)
+                else:
                     time.sleep(1)
-                    print("🔔 TEM MENSAGEM NÃO LIDA!")
-                    main.main(texto)
-            else:
-                time.sleep(1)
-                print("Nenhuma mensagem não lida.")
+                    print("Nenhuma mensagem não lida.")
 
-        except Exception as erro:
-            print("[ERROR!!!]")
-            break
+            except Exception as erro:
+                print("[ERROR!!!]")
+                break
             
 
 
