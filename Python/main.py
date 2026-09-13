@@ -14,4 +14,4 @@ def main(texto):
     '[data-testid="cell-frame-container"]').filter(
         has = pagina.locator('[data-testid="icon-unread-count"]')
 )
-        conversa_nao_lida.first.click()
+        conversa_nao_lida.first.click(button="left")

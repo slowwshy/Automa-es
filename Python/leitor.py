@@ -38,7 +38,9 @@ with sync_playwright() as p:
                 print("Nenhuma mensagem não lida.")
 
         except Exception as erro:
-            exit()
+            print("[ERROR!!!]")
+            break
+            
 
 
 
