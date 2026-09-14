@@ -13,7 +13,20 @@ window.setLayout(layout)
 window.show()
 
 button = QPushButton("Start")
+button.setFixedSize(250, 70)
+button.setStyleSheet("background-color: blue")
 layout.addWidget(button)
 
-button.clicked.connect(leitor.leitor)
+ButtonOff = QPushButton("Stop")
+ButtonOff.setFixedSize(250, 70)
+ButtonOff.setStyleSheet("background-color: red")
+layout.addWidget(ButtonOff)
+
+
+if(button.clicked.connect(leitor.leitor)):
+    buttonConfirm = QPushButton("Confirm")
+    buttonConfirm.setFixedSize(250, 70)
+    buttonConfirm.setStyleSheet("background-color: gray")
+    layout.addWidget(buttonConfirm)
+
 sys.exit(app.exec())
