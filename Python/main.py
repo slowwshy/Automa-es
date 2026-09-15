@@ -1,14 +1,14 @@
-import os
+
 import time
 import subprocess
-import pyautogui
-import pyscreeze
-import platform
-import easyocr
-import re
-from leitor import pagina, navegador
+from playwright.sync_api import sync_playwright
 
 
-def main(texto):
-       print("text")
-   
+
+
+def processo(pagina):
+       pagina.get_by_text("Não lidas", exact=True).click()
+
+       time.sleep(4)
+
+       print(pagina.locator("body").inner_text())

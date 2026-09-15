@@ -1,13 +1,6 @@
-import os
-import time
-import subprocess
-import pyautogui 
-import pyscreeze
-import platform
-import easyocr
 import re
+import time
 import main
-import numpy as np
 from playwright.sync_api import sync_playwright
 
 with sync_playwright() as p:
@@ -18,27 +11,27 @@ with sync_playwright() as p:
     )
 
     pagina = navegador.new_page(no_viewport=True)
-
     pagina.goto("https://web.whatsapp.com")
 
     input("Entre no WhatsApp e abra a conversa. Pressione ENTER...")
 
     while True:
         try:
-            elemento = pagina.locator("#unread-filter")
+            
+            elemento = pagina.get_by_text("não lidas", exact=False)
+            aba = pagina.get_by_role("tab", name="Não lidas")
+            numero = aba.get_by_text(re.compile(r"^\d+$"))
 
-            texto = elemento.inner_text().strip().splitlines()
-
-            if len(texto) > 1:
+            if numero.is_visible():
                     time.sleep(1)
-                    print("🔔 TEM MENSAGEM NÃO LIDA!")
-                    main.main(texto)
+                    print("TEM MENSAGEM NÃO LIDA!", elemento.count())
+                    main.processo(pagina)
             else:
-                time.sleep(1)
-                print("Nenhuma mensagem não lida.")
+                    time.sleep(1)
+                    print("Nenhuma mensagem não lida.")
 
         except Exception as erro:
-            print("[ERROR!!!]")
+            print("[ERROR!!!]", erro)
             break
             
 
