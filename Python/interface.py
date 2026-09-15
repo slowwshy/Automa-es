@@ -1,6 +1,6 @@
 
 import sys
-from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout
+from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel
 import leitor
 
 app = QApplication(sys.argv)
@@ -22,11 +22,16 @@ ButtonOff.setFixedSize(250, 70)
 ButtonOff.setStyleSheet("background-color: red")
 layout.addWidget(ButtonOff)
 
-
-if(button.clicked.connect(leitor.leitor)):
+def iniciar():
+    
     buttonConfirm = QPushButton("Confirm")
-    buttonConfirm.setFixedSize(250, 70)
+    buttonConfirm.setFixedSize(150, 40)
     buttonConfirm.setStyleSheet("background-color: gray")
     layout.addWidget(buttonConfirm)
+    message_label = QLabel("Quando se conectar ao whatsapp, clique em confirmar para começar a automação.")
+    layout.addWidget(message_label)
+    buttonConfirm.clicked.connect(leitor.leitor)
+
+button.clicked.connect(iniciar)
 
 sys.exit(app.exec())

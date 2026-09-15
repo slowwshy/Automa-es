@@ -10,7 +10,7 @@ import main
 import numpy as np
 from playwright.sync_api import sync_playwright
 
-def leitor(button):
+def leitor(buttonConfirm):
     with sync_playwright() as p:
 
         navegador = p.chromium.launch(
