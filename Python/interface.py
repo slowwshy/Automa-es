@@ -27,7 +27,7 @@ ButtonOff.setStyleSheet("background-color: red")
 layout.addWidget(ButtonOff)
 ButtonOff.clicked.connect(stop)
 
-def iniciar():
+def start():
     
     buttonConfirm = QPushButton("Confirm")
     buttonConfirm.setFixedSize(150, 40)
@@ -37,6 +37,6 @@ def iniciar():
     layout.addWidget(message_label)
     buttonConfirm.clicked.connect(lambda: leitor.leitor(system))
 
-button.clicked.connect(iniciar)
+button.clicked.connect()
 
 sys.exit(app.exec())
