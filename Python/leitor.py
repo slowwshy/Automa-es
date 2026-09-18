@@ -1,21 +1,31 @@
 
 
-import re
+
+
 import time
+import re
 import main
 from playwright.sync_api import sync_playwright
 
-with sync_playwright() as p:
+def leitor(buttonConfirm):
+    with sync_playwright() as p:
 
-    navegador = p.chromium.launch(
-        headless=False,
-        args=["--start-maximized"]
-    )
+        navegador = p.chromium.launch(
+            headless=False,
+            args=["--start-maximized"]
+        )
 
-    pagina = navegador.new_page(no_viewport=True)
-    pagina.goto("https://web.whatsapp.com")
 
-    input("Entre no WhatsApp e abra a conversa. Pressione ENTER...")
+        pagina = navegador.new_page(no_viewport=True)
+        pagina.goto("https://web.whatsapp.com")
+
+        pagina = navegador.new_page(no_viewport=True)
+
+        pagina.goto("https://web.whatsapp.com")
+
+
+        input("Entre no WhatsApp e abra a conversa. Pressione ENTER...")
+
 
     while True:
         try:
@@ -35,6 +45,8 @@ with sync_playwright() as p:
         except Exception as erro:
             print("[ERROR!!!]", erro)
             break
+
+
             
 
 
