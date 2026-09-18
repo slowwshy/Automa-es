@@ -1,13 +1,7 @@
-import os
+
 import time
-import subprocess
-import pyautogui 
-import pyscreeze
-import platform
-import easyocr
 import re
 import main
-import numpy as np
 from playwright.sync_api import sync_playwright
 
 def leitor(buttonConfirm):
@@ -26,17 +20,7 @@ def leitor(buttonConfirm):
 
         while True:
             try:
-                elemento = pagina.locator("#unread-filter")
-
-                texto = elemento.inner_text().strip().splitlines()
-
-                if len(texto) > 1:
-                        time.sleep(1)
-                        print("🔔 TEM MENSAGEM NÃO LIDA!")
-                        main.main(texto)
-                else:
-                    time.sleep(1)
-                    print("Nenhuma mensagem não lida.")
+               
 
             except Exception as erro:
                 print("[ERROR!!!]")
