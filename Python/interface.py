@@ -1,4 +1,3 @@
-
 import sys
 from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel
 import leitor
@@ -30,7 +29,7 @@ def iniciar():
     layout.addWidget(buttonConfirm)
     message_label = QLabel("Quando se conectar ao whatsapp, clique em confirmar para começar a automação.")
     layout.addWidget(message_label)
-    buttonConfirm.clicked.connect(leitor.leitor)
+    buttonConfirm.clicked.connect(leitor.leitor(buttonConfirm))
 
 button.clicked.connect(iniciar)
 
