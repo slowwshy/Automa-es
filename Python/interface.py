@@ -1,10 +1,12 @@
 import sys
 from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel
 import leitor
+import threading
 
 app = QApplication(sys.argv)
 layout = QVBoxLayout()
-system = bool
+parar = threading.Event()
+confirmado = threading.Event()
 
 window = QWidget()
 window.setWindowTitle("Automa-es.py")
@@ -17,26 +19,30 @@ button.setFixedSize(250, 70)
 button.setStyleSheet("background-color: blue")
 layout.addWidget(button)
 
-def stop():
-    global system
-    system = False
-
 ButtonOff = QPushButton("Stop")
 ButtonOff.setFixedSize(250, 70)
 ButtonOff.setStyleSheet("background-color: red")
 layout.addWidget(ButtonOff)
+
+def stop():
+    print("Automação interrompida pelo usuário.")
+    parar.set()
+
 ButtonOff.clicked.connect(stop)
 
 def start():
-    
-    buttonConfirm = QPushButton("Confirm")
-    buttonConfirm.setFixedSize(150, 40)
-    buttonConfirm.setStyleSheet("background-color: gray")
-    layout.addWidget(buttonConfirm)
-    message_label = QLabel("Quando se conectar ao whatsapp, clique em confirmar para começar a automação.")
-    layout.addWidget(message_label)
-    buttonConfirm.clicked.connect(lambda: leitor.leitor(system))
+    parar.clear()
+    confirmado.clear()
+    threading.Thread(target=leitor.leitor, args=(parar, confirmado), daemon=True).start()
 
-button.clicked.connect()
+buttonConfirm = QPushButton("Confirm")
+buttonConfirm.setFixedSize(150, 40)
+buttonConfirm.setStyleSheet("background-color: gray")
+layout.addWidget(buttonConfirm)
+message_label = QLabel("Quando se conectar ao whatsapp, clique em confirmar para começar a automação.")
+layout.addWidget(message_label)
+buttonConfirm.clicked.connect(confirmado.set)
+   
+button.clicked.connect(start)
 
 sys.exit(app.exec())

@@ -5,7 +5,7 @@ import main
 
 from playwright.sync_api import sync_playwright
 
-def leitor(system):
+def leitor(parar, confirmado):
     print("Iniciando automação...")
     with sync_playwright() as p:
 
@@ -19,7 +19,8 @@ def leitor(system):
         pagina.goto("https://web.whatsapp.com")
 
 
-        input("Entre no WhatsApp e abra a conversa. Pressione ENTER...")
+        while not confirmado.is_set():
+            time.sleep(1)
 
         while True:
             try:
@@ -35,11 +36,9 @@ def leitor(system):
                 else:
                         time.sleep(1)
                         print("Nenhuma mensagem não lida.")
-
-                if system == False:
-                        system = True
-                        break
-
+                if parar.is_set():
+                    print("Automação interrompida pelo usuário.")
+                    break
             except Exception as erro:
                 print("[ERROR!!!]", erro)
                 break

@@ -12,7 +12,7 @@ def processo(pagina):
 
        campo = pagina.get_by_test_id("conversation-compose-box-input")
        campo.click()
-       campo.fill(".")
+       
        pagina.keyboard.press("Enter")
 
        time.sleep(2)
