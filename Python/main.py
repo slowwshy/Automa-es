@@ -1,4 +1,7 @@
 import time
+from pathlib import Path
+
+ARQUIVO = Path(__file__).parent / "Mensages.txt"
 
 def processo(pagina):
        pagina.get_by_text("Não lidas", exact=True).click()
@@ -11,8 +14,9 @@ def processo(pagina):
        time.sleep(1)
 
        campo = pagina.get_by_test_id("conversation-compose-box-input")
+       mensagem = ARQUIVO.read_text(encoding="utf-8").strip() if ARQUIVO.exists() else ""
        campo.click()
-       
+       campo.fill(mensagem or ".")
        pagina.keyboard.press("Enter")
 
        time.sleep(2)

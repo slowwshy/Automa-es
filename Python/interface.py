@@ -1,12 +1,24 @@
 import sys
-from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel
+from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QTextEdit, QLineEdit
+from sympy import true
+from PySide6.QtGui import QIcon
 import leitor
 import threading
+from pathlib import Path
+
+ARQUIVO = Path(__file__).parent / "Mensages.txt"
 
 app = QApplication(sys.argv)
 layout = QVBoxLayout()
 parar = threading.Event()
 confirmado = threading.Event()
+
+def recurso(nome):
+    base = Path(getattr(sys, "_MEIPASS", Path(__file__).parent))
+    return str(base / nome)
+
+app.setWindowIcon(QIcon(recurso("icone.png")))
+
 
 window = QWidget()
 window.setWindowTitle("Automa-es.py")
@@ -14,6 +26,18 @@ window.resize(800, 500)
 window.setLayout(layout)
 window.show()
 
+campo_texto = QTextEdit()
+campo_texto.setFixedHeight(100)
+layout.addWidget(campo_texto)
+campo_texto.setPlaceholderText("Mensagem (texto e links)")
+if ARQUIVO.exists():
+    campo_texto.setPlainText(ARQUIVO.read_text(encoding="utf-8"))
+layout.addWidget(campo_texto)
+
+campo_texto.textChanged.connect(
+    lambda: ARQUIVO.write_text(campo_texto.toPlainText(), encoding="utf-8")
+)
+    
 button = QPushButton("Start")
 button.setFixedSize(250, 70)
 button.setStyleSheet("background-color: blue")
