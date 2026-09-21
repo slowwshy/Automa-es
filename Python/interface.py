@@ -1,6 +1,5 @@
 import sys
 from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QTextEdit, QLineEdit
-from sympy import true
 from PySide6.QtGui import QIcon
 import leitor
 import threading
@@ -17,8 +16,7 @@ def recurso(nome):
     base = Path(getattr(sys, "_MEIPASS", Path(__file__).parent))
     return str(base / nome)
 
-app.setWindowIcon(QIcon(recurso("icone.png")))
-
+app.setWindowIcon(QIcon(recurso("Crocofile.png")))
 
 window = QWidget()
 window.setWindowTitle("Automa-es.py")
